@@ -1,3 +1,5 @@
+package mathlog
+
 val parseExpression = ParseExpression()
 
 class ParseExpression
@@ -22,7 +24,7 @@ class ParseExpression
     }
 
     private fun tokenize(input: String): List<String> {
-        val regex = Regex("${VARIABLE_FORMAT}|!|&|\\||->|\\(|\\)")
+        val regex = Regex("$VARIABLE_FORMAT|!|&|\\||->|\\(|\\)")
         val matches = regex.findAll(input)
         return matches.map { it.value }.toList()
     }

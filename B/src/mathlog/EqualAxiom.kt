@@ -1,3 +1,5 @@
+package mathlog
+
 val equalAxiom = EqualAxiom()
 class EqualAxiom
 {

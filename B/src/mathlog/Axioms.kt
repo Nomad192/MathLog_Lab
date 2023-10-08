@@ -1,3 +1,5 @@
+package mathlog
+
 val Axioms : Map<Int, Expression> = AxiomsScheme.axioms
 
 object AxiomsScheme {

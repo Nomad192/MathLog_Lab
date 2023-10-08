@@ -1,3 +1,5 @@
+package mathlog
+
 @Deprecated("Was replaced by a more correct verification of the axiom. Check EqualAxiom.")
 val renameToDefaultExpression = RenameToDefaultExpression()
 
@@ -30,10 +32,10 @@ class RenameToDefaultExpression
                 val newName = variableMap.getOrPut(expression.name) { generateVariableId() }
                 Expression.Variable(newName.toString())
             }
-            is Expression.Conjunction   -> Expression.Conjunction   (work(expression.left), work(expression.right))
-            is Expression.Disjunction   -> Expression.Disjunction   (work(expression.left), work(expression.right))
-            is Expression.Implication   -> Expression.Implication   (work(expression.left), work(expression.right))
-            is Expression.Denial        -> Expression.Denial        (work(expression.expression))
+            is Expression.Conjunction -> Expression.Conjunction(work(expression.left), work(expression.right))
+            is Expression.Disjunction -> Expression.Disjunction(work(expression.left), work(expression.right))
+            is Expression.Implication -> Expression.Implication(work(expression.left), work(expression.right))
+            is Expression.Denial -> Expression.Denial(work(expression.expression))
         }
     }
 }

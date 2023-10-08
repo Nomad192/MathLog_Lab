@@ -2,7 +2,8 @@
 
 !.git*
 
-!/src
+!/src/
+!/src/mathlog/
 
 !*.kt
 !Makefile
