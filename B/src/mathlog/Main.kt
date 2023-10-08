@@ -7,5 +7,5 @@ fun main() {
             Record(lineStr, ContextList(contextStr), parseExpression(expressionStr), index + 1)
         }
         .toList())
-    file.records.forEach { println("[${it.number}] ${it.original} [${(it.rule as Rule)}]") }
+    file.records.forEach { println("[${it.number}] ${it.original} [${it.rule}]") }
 }
