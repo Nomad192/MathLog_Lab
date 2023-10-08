@@ -15,12 +15,12 @@ sealed class Rule {
 
     data class Hyp(val number: Int) : Rule() {
         override val prefix: String = "Hyp."
-        override val full: String = "$prefix $number"
+        override val full: String = "$prefix ${number + 1}"
     }
 
-    data class MP(val leftNumber: Int, val rightNumber: Int) : Rule() {
+    data class MP(val leftNumber: Int, val implNumber: Int) : Rule() {
         override val prefix: String = "M.P."
-        override val full: String = "$prefix $leftNumber, $rightNumber"
+        override val full: String = "$prefix $leftNumber, $implNumber"
     }
 
     data class Ded(val number: Int) : Rule() {
@@ -56,7 +56,7 @@ sealed class Rule {
         private fun checkHyp(currentRecord: Record): Int?
         {
             val index = currentRecord.contextOriginalList.indexOfFirst { it == currentRecord.line.expression }
-            return if (index != -1) index + 1 else null
+            return if (index != -1) index else null
         }
 
         private fun checkMP(records: List<Record>, currentRecord: Record): Pair<Int, Int>?

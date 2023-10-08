@@ -9,6 +9,12 @@ class ParseExpression
 
     companion object {
         private const val VARIABLE_FORMAT = "[A-Z][A-Z0-9']*"
+        private val denialSymbol = Regex.escape(Expression.Denial.SYMBOL)
+        private val conjunctionSymbol = Regex.escape(Expression.Conjunction.SYMBOL)
+        private val disjunctionSymbol = Regex.escape(Expression.Disjunction.SYMBOL)
+        private val implicationSymbol = Regex.escape(Expression.Implication.SYMBOL)
+
+        private val regex = Regex("$VARIABLE_FORMAT|$conjunctionSymbol|$disjunctionSymbol|$implicationSymbol|$denialSymbol|\\(|\\)")
     }
 
     /** ============================================================================================================ **/
@@ -24,7 +30,6 @@ class ParseExpression
     }
 
     private fun tokenize(input: String): List<String> {
-        val regex = Regex("$VARIABLE_FORMAT|!|&|\\||->|\\(|\\)")
         val matches = regex.findAll(input)
         return matches.map { it.value }.toList()
     }

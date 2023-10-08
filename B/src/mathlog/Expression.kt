@@ -2,10 +2,51 @@ package mathlog
 
 sealed class Expression {
     data class Conjunction(val left: Expression, val right: Expression) : Expression()
+    {
+        companion object {
+            const val SYMBOL: String = "&"
+        }
+
+        override fun toString(): String {
+            return "($left$SYMBOL$right)"
+        }
+    }
     data class Disjunction(val left: Expression, val right: Expression) : Expression()
+    {
+        companion object {
+            const val SYMBOL: String = "|"
+        }
+
+        override fun toString(): String {
+            return "($left$SYMBOL$right)"
+        }
+    }
     data class Implication(val left: Expression, val right: Expression) : Expression()
+    {
+        companion object {
+            const val SYMBOL: String = "->"
+        }
+
+        override fun toString(): String {
+            return "($left$SYMBOL$right)"
+        }
+    }
     data class Denial(val expression: Expression) : Expression()
+    {
+        companion object {
+            const val SYMBOL: String = "!"
+        }
+
+        override fun toString(): String {
+            return "($SYMBOL$expression)"
+        }
+    }
     data class Variable(val name: String) : Expression()
+    {
+        override fun toString(): String {
+            return name
+        }
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
