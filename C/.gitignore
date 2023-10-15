@@ -1,0 +1,10 @@
+*
+
+!.git*
+
+!/src/
+!/src/*/
+!/src/*/*/
+
+!*.kt
+!Makefile
