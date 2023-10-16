@@ -2,8 +2,7 @@ package mathlog.parse
 
 val parseExpression = ParseExpression()
 
-class ParseExpression
-{
+class ParseExpression {
     private lateinit var tokens: List<String>
     private var currentTokenIndex: Int = 0
 
@@ -14,7 +13,8 @@ class ParseExpression
         private val disjunctionSymbol = Regex.escape(Expression.Disjunction.SYMBOL)
         private val implicationSymbol = Regex.escape(Expression.Implication.SYMBOL)
 
-        private val regex = Regex("$VARIABLE_FORMAT|$conjunctionSymbol|$disjunctionSymbol|$implicationSymbol|$denialSymbol|\\(|\\)")
+        private val regex =
+            Regex("$VARIABLE_FORMAT|$conjunctionSymbol|$disjunctionSymbol|$implicationSymbol|$denialSymbol|\\(|\\)")
     }
 
     /** ============================================================================================================ **/
@@ -72,13 +72,12 @@ class ParseExpression
         return parseVariable()
     }
 
-    private fun parseVariable() : Expression = Expression.Variable(tokens[currentTokenIndex++])
+    private fun parseVariable(): Expression = Expression.Variable(tokens[currentTokenIndex++])
 
-    /**
-    private fun parseVariable() : Expression {
-    val token = tokens[currentTokenIndex++]
-    Regex("^${variableFormat}$").find(token) ?: throw IllegalArgumentException("Invalid variable: $token")
-    return Expression.Variable(token)
+    /** Version with name checks **/
+    private fun parseVariableWithChecks(): Expression {
+        val token = tokens[currentTokenIndex++]
+        Regex("^${VARIABLE_FORMAT}$").find(token) ?: throw IllegalArgumentException("Invalid variable: $token")
+        return Expression.Variable(token)
     }
-     **/
 }

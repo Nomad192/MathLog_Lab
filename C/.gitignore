@@ -2,9 +2,6 @@
 
 !.git*
 
-!/src/
-!/src/*/
-!/src/*/*/
-
-!*.kt
-!Makefile
+!/Fast_Version
+!/All_Checks_Version
+!proof_explanation.pdf

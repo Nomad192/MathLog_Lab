@@ -3,7 +3,7 @@ package mathlog.axioms
 import mathlog.parse.Expression
 import mathlog.parse.parseExpression
 
-val Axioms : Map<Int, Expression> = AxiomsScheme.axioms
+val Axioms: Map<Int, Expression> = AxiomsScheme.axioms
 
 object AxiomsScheme {
     private val axiomSchemeStr = """

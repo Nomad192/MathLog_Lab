@@ -31,24 +31,22 @@ sealed class Rule {
         override val full: String = "$prefix $number"
     }
 
-    object Incorrect: Rule() {
+    object Incorrect : Rule() {
         override val prefix: String = "Incorrect"
         override val full: String = prefix
     }
 
-    object Empty: Rule() {
+    object Empty : Rule() {
         override val prefix: String = ""
         override val full: String = prefix
     }
 
-    companion object
-    {
-        fun getRule(records: List<Record>, record: Record): Rule
-        {
+    companion object {
+        fun getRule(records: List<Record>, record: Record): Rule {
             return checkAxioms(record.line.expression)?.let { Axiom(it) }
                 ?: checkHyp(record)?.let { Hyp(it) }
-                ?: checkMP(records, record)?.let { MP(it.first, it.second) }
                 ?: checkDed(records, record)?.let { Ded(it) }
+                ?: checkMP(records, record)?.let { MP(it.first, it.second) }
                 ?: Incorrect
         }
 
@@ -56,27 +54,24 @@ sealed class Rule {
             return Axioms.entries.firstOrNull { equalAxiom(it.value, expression) }?.key
         }
 
-        private fun checkHyp(currentRecord: Record): Int?
-        {
+        private fun checkHyp(currentRecord: Record): Int? {
             val index = currentRecord.contextOriginalList.indexOfFirst { it == currentRecord.line.expression }
             return if (index != -1) index else null
         }
 
-        private fun checkMP(records: List<Record>, currentRecord: Record): Pair<Int, Int>?
-        {
-            for((i, recordImpl) in records.withIndex())
-            {
+        private fun checkMP(records: List<Record>, currentRecord: Record): Pair<Int, Int>? {
+            for ((i, recordImpl) in records.withIndex()) {
                 if (recordImpl.rule is Empty) break
                 if (recordImpl.line.expression is Expression.Implication
                     && recordImpl.line.expression.right == currentRecord.line.expression
-                    && recordImpl.line.context == currentRecord.line.context)
-                {
-                    for ((j, record) in records.withIndex())
-                    {
+                    && recordImpl.line.context == currentRecord.line.context
+                ) {
+                    for ((j, record) in records.withIndex()) {
                         if (i == j) continue
                         if (record.rule is Empty) break
                         if (record.line.expression == recordImpl.line.expression.left
-                            && record.line.context == currentRecord.line.context)
+                            && record.line.context == currentRecord.line.context
+                        )
                             return Pair(record.number, recordImpl.number)
                     }
                 }

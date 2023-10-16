@@ -4,10 +4,9 @@ import mathlog.parse.Expression
 
 val removeDed = RemoveDed()
 
-class RemoveDed: (ProofNode) -> ProofNode {
+class RemoveDed : (ProofNode) -> ProofNode {
     data class DedLists(val addToContext: List<Expression>, val removeFromContext: List<Expression>)
-    companion object
-    {
+    companion object {
         private fun getDedLists(dedExpression: Expression, prevExpression: Expression): DedLists {
             var prevExprCopy = prevExpression
             val addToContext: MutableList<Expression> = ArrayList()
@@ -37,10 +36,8 @@ class RemoveDed: (ProofNode) -> ProofNode {
         }
     }
 
-    override fun invoke(node: ProofNode): ProofNode
-    {
-        when(node)
-        {
+    override fun invoke(node: ProofNode): ProofNode {
+        when (node) {
             is ProofNode.Axiom -> return node
             is ProofNode.Hyp -> return node
             is ProofNode.MP -> {
@@ -49,22 +46,16 @@ class RemoveDed: (ProofNode) -> ProofNode {
 
                 return node
             }
+
             is ProofNode.Ded -> {
                 this(node.prev)
 
-                val dedLists = getDedLists(node.line.expression, node.prev.line.expression)
+                val dedLists = getDedLists(node.expression, node.prev.expression)
 
-//                println("node: $node")
-                dedLists.addToContext.forEach{
-//                    println("---------------")
-//                    println("add $it")
-//                    println("---------------")
+                dedLists.addToContext.forEach {
                     node.prev = AddToContext.forDedPrev(it, node.prev)
                 }
-                dedLists.removeFromContext.forEach{
-//                    println("---------------")
-//                    println("remove $it")
-//                    println("---------------")
+                dedLists.removeFromContext.forEach {
                     node.prev = node.prev.removeFromContext(it)
                 }
 

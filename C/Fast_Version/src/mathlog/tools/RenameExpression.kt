@@ -4,23 +4,22 @@ import mathlog.parse.Expression
 
 val renameExpression = RenameExpression()
 
-class RenameExpression
-{
+class RenameExpression {
     private lateinit var renameFunctor: (String) -> Expression
 
     /** ============================================================================================================ **/
 
-    operator fun invoke(expression: Expression, renameFunctor: (String) -> Expression = StandardRename()) = entryPoint(expression, renameFunctor)
+    operator fun invoke(expression: Expression, renameFunctor: (String) -> Expression = StandardRename()) =
+        entryPoint(expression, renameFunctor)
 
     /** ============================================================================================================ **/
 
-    private fun entryPoint(expression : Expression, renameFunctional: (String) -> Expression): Expression {
+    private fun entryPoint(expression: Expression, renameFunctional: (String) -> Expression): Expression {
         this.renameFunctor = renameFunctional
         return work(expression)
     }
 
-    private fun work(expression : Expression): Expression
-    {
+    private fun work(expression: Expression): Expression {
         return when (expression) {
             is Expression.Variable -> renameFunctor(expression.name)
             is Expression.Conjunction -> Expression.Conjunction(work(expression.left), work(expression.right))
@@ -31,15 +30,13 @@ class RenameExpression
     }
 }
 
-class StandardRename: (String) -> Expression
-{
+class StandardRename : (String) -> Expression {
     private var variableMap: MutableMap<String, Int> = mutableMapOf()
     private var variableIdCounter = 0
 
     override operator fun invoke(oldName: String) = Expression.Variable(generateNewName(oldName).toString())
 
-    private fun generateNewName(oldName: String): Int
-    {
+    private fun generateNewName(oldName: String): Int {
         return variableMap.getOrPut(oldName) { generateVariableId() }
     }
 
